@@ -727,11 +727,15 @@
 
         .stat-value {
             font-family: var(--font-display);
-            font-size: clamp(2rem, 5vw, 4rem);
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
             color: var(--accent-primary);
             line-height: 1;
             letter-spacing: -1px;
-            word-break: break-all;
+            white-space: nowrap;
+        }
+
+        .stat-value.text-small {
+            font-size: clamp(1.5rem, 4vw, 2.8rem);
         }
 
         .ca-box {
@@ -1002,7 +1006,7 @@
             </div>
             <div class="stat-card">
                 <span class="stat-label">Liquidity</span>
-                <span class="stat-value">LOCKED</span>
+                <span class="stat-value text-small">LOCKED</span>
             </div>
             <div class="stat-card">
                 <span class="stat-label">Decimals</span>
