@@ -827,6 +827,7 @@
                 <a href="#how-to-buy">How To Buy</a>
                 <a href="#story">Stories</a>
                 <a href="#token">Tokenomics</a>
+                <a href="#chart">Chart</a>
                 <a href="https://jup.ag/tokens/n3ShrNZRCoMrw5Gww7rPMxVbDq3to3YwsGkDz19pump" target="_blank" class="btn-buy-nav">BUY $LOST</a>
             </div>
             <div class="hamburger" id="hamburger">
@@ -839,10 +840,10 @@
 
     <section id="hero">
         <canvas id="bg-canvas"></canvas>
-        <div class="hero-image-container reveal">
+        <div class="hero-image-container">
             <img src="https://lcaryepoaiuzuppladzq.supabase.co/storage/v1/object/public/lost/photo_2026-03-27_07-24-53.jpg" alt="$LOST Logo" class="hero-image" referrerPolicy="no-referrer">
         </div>
-        <div class="hero-content reveal">
+        <div class="hero-content">
             <h1 class="glitch" data-text="PUMP.FUN RUINED MY LIFE">PUMP.FUN RUINED MY LIFE</h1>
             <p>$LOST — But At Least We're Lost Together</p>
             <div class="hero-btns">
@@ -861,7 +862,7 @@
         </div>
     </div>
 
-    <section id="mission" class="reveal">
+    <section id="mission">
         <h2 class="section-title">Our Mission</h2>
         <div class="mission-content">
             <p class="mission-text">
@@ -870,7 +871,7 @@
         </div>
     </section>
 
-    <section id="how-to-buy" class="reveal">
+    <section id="how-to-buy">
         <h2 class="section-title">How To Buy On Pump.fun</h2>
         <div class="how-to-grid">
             <div class="how-to-card">
@@ -896,7 +897,7 @@
         </div>
     </section>
 
-    <section id="story" class="reveal">
+    <section id="story">
         <h2 class="section-title">Tell Your Story</h2>
         
         <div class="story-form">
@@ -917,7 +918,7 @@
         </div>
     </section>
 
-    <section id="token" class="reveal">
+    <section id="token">
         <h2 class="section-title">$LOST Tokenomics</h2>
         <div class="token-grid">
             <div class="stat-card">
@@ -943,18 +944,33 @@
         </div>
     </section>
 
+    <section id="chart" style="background: #ffffff; padding: 100px 20px; border-radius: 40px; margin: 100px auto; max-width: 1200px; border: 1px solid rgba(0,0,0,0.05); box-shadow: var(--shadow-md);">
+        <h2 class="section-title">Live Market Cap</h2>
+        <div style="width: 100%; height: 700px; border-radius: 24px; overflow: hidden; box-shadow: var(--shadow-lg); border: 1px solid rgba(0,0,0,0.05);">
+            <iframe 
+                src="https://dexscreener.com/solana/n3ShrNZRCoMrw5Gww7rPMxVbDq3to3YwsGkDz19pump?embed=1&theme=light&trades=1&info=1" 
+                style="width: 100%; height: 100%; border: none;"
+            ></iframe>
+        </div>
+        <p style="text-align: center; margin-top: 20px; color: var(--text-dim); font-weight: 600; font-size: 0.9rem;">
+            * Chart defaults to 1m candles for maximum volatility tracking.
+        </p>
+    </section>
+
     <footer>
         <h3 style="color: var(--accent-primary);">$LOST | Not Financial Advice</h3>
         <div class="footer-links">
-            <a href="https://dexscreener.com/solana/68A4u3hmm23XSqogWSBK7kgyv2c2cVZjZvKD3aptCk7k" target="_blank">Chart</a>
+            <a href="https://dexscreener.com/solana/n3ShrNZRCoMrw5Gww7rPMxVbDq3to3YwsGkDz19pump" target="_blank">Chart</a>
             <a href="https://jup.ag/tokens/n3ShrNZRCoMrw5Gww7rPMxVbDq3to3YwsGkDz19pump" target="_blank">Buy</a>
             <a href="https://x.com/i/communities/2035772242831790146" target="_blank">Community</a>
         </div>
-        <p style="font-size: 0.8rem; color: #666;">&copy; 2024 $LOST Token. All rights reserved.</p>
+        <p style="font-size: 0.8rem; color: #666;">&copy; 2026 $LOST Token. All rights reserved.</p>
         <p style="font-size: 0.7rem; color: #999; max-width: 600px; margin: 20px auto 0;">Disclaimer: $LOST is a memecoin with no intrinsic value. Trading crypto is risky. Don't invest money you can't afford to lose.</p>
     </footer>
 
-    <script>
+    <script type="module">
+        console.log("LOST script initialized");
+
         // --- Scroll Header Effect ---
         window.addEventListener('scroll', () => {
             const nav = document.querySelector('nav');
@@ -966,29 +982,34 @@
         });
 
         // --- Reveal Animation ---
-        function reveal() {
+        window.reveal = function() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 150;
+                var elementVisible = 100; // Reduced threshold
                 if (elementTop < windowHeight - elementVisible) {
                     reveals[i].classList.add("active");
                 }
             }
-        }
-        window.addEventListener("scroll", reveal);
-        reveal(); // Initial check
-        // These will be injected via Vite or you can hardcode them for static deployment
-        const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "https://lcaryepoaiuzuppladzq.supabase.co"; 
-        const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || "";
+        };
+        window.addEventListener("scroll", window.reveal);
+        // Use a small timeout to ensure DOM is ready and initial reveal triggers
+        setTimeout(window.reveal, 100);
+
+        // Supabase Configuration
+        // In Vite, these are replaced at build time. For static preview, we use defaults.
+        const SUPABASE_URL = "https://lcaryepoaiuzuppladzq.supabase.co"; 
+        const SUPABASE_KEY = ""; // User needs to provide this in env
         
         let supabaseClient = null;
-        const isSupabaseConfigured = SUPABASE_URL && SUPABASE_KEY && SUPABASE_KEY !== "YOUR_SUPABASE_ANON_KEY" && SUPABASE_KEY !== "";
+        // Check if we have a valid key (not empty and not the placeholder)
+        const isSupabaseConfigured = SUPABASE_URL && SUPABASE_KEY && SUPABASE_KEY !== "" && SUPABASE_KEY.length > 20;
         
         if (isSupabaseConfigured) {
             try {
-                supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+                // @ts-ignore - supabase is loaded from CDN
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
             } catch (e) {
                 console.error("Supabase initialization failed:", e);
             }
@@ -1007,20 +1028,20 @@
         });
 
         // --- Copy CA ---
-        function copyCA() {
+        window.copyCA = function() {
             const ca = document.getElementById('contractAddress').innerText;
             navigator.clipboard.writeText(ca).then(() => {
                 const btn = document.querySelector('.btn-copy');
                 btn.innerText = 'COPIED!';
                 setTimeout(() => btn.innerText = 'COPY CA', 2000);
             });
-        }
+        };
 
         // --- Supabase Logic ---
         const storiesContainer = document.getElementById('storiesContainer');
         const submitBtn = document.getElementById('submitStory');
 
-        async function loadStories() {
+        window.loadStories = async function() {
             let stories = [];
             if (supabaseClient) {
                 const { data, error } = await supabaseClient
@@ -1046,16 +1067,16 @@
 
             stories.forEach(story => {
                 const card = document.createElement('div');
-                card.className = 'story-card reveal active';
+                card.className = 'story-card'; 
                 card.innerHTML = `
                     <span class="story-user">@${story.username}</span>
                     <p class="story-text">"${story.content}"</p>
                     <div class="vote-container">
-                        <button class="vote-btn agree" onclick="vote(${story.id}, 'agree')">
+                        <button class="vote-btn agree" onclick="window.vote(${story.id}, 'agree')">
                             I AGREE, PUMPFUN RUINED YOUR LIFE
                             <span class="vote-count">${story.agree_count || 0}</span>
                         </button>
-                        <button class="vote-btn strong" onclick="vote(${story.id}, 'strong')">
+                        <button class="vote-btn strong" onclick="window.vote(${story.id}, 'strong')">
                             YOU'RE NOT LOST
                             <span class="vote-count">${story.stay_strong_count || 0}</span>
                         </button>
@@ -1063,9 +1084,9 @@
                 `;
                 storiesContainer.appendChild(card);
             });
-        }
+        };
 
-        async function vote(id, type) {
+        window.vote = async function(id, type) {
             const column = type === 'agree' ? 'agree_count' : 'stay_strong_count';
             
             if (supabaseClient) {
@@ -1075,7 +1096,7 @@
                         .from('stories')
                         .update({ [column]: (current[column] || 0) + 1 })
                         .eq('id', id);
-                    if (!error) loadStories();
+                    if (!error) window.loadStories();
                 }
             } else {
                 const stories = getLocalStories();
@@ -1083,10 +1104,10 @@
                 if (story) {
                     story[column] = (story[column] || 0) + 1;
                     saveLocalStories(stories);
-                    loadStories();
+                    window.loadStories();
                 }
             }
-        }
+        };
 
         submitBtn.addEventListener('click', async () => {
             const username = document.getElementById('username').value || 'Anon';
@@ -1133,14 +1154,14 @@
             function resetForm() {
                 document.getElementById('username').value = '';
                 document.getElementById('storyContent').value = '';
-                loadStories();
+                window.loadStories();
             }
 
             submitBtn.disabled = false;
             submitBtn.innerText = 'SUBMIT STORY';
         });
 
-        loadStories();
+        window.loadStories();
 
         // --- Matrix Background ---
         const canvas = document.getElementById('bg-canvas');
