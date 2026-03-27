@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>$LOST | Pump.fun Ruined My Life</title>
     <meta name="description" content="$LOST — The Solana memecoin for the rekt. Pump.fun ruined our lives, so we built a community.">
+    <link rel="icon" href="https://lcaryepoaiuzuppladzq.supabase.co/storage/v1/object/public/lost/lost.png">
     
     <!-- Open Graph -->
     <meta property="og:title" content="$LOST | Pump.fun Ruined My Life">
@@ -17,7 +18,7 @@
 
     <!-- Google Fonts -->
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:wght@300;400;700;900&display=swap');
 
         :root {
             --bg-main: #ffffff;
@@ -27,8 +28,8 @@
             --accent-secondary: #16a34a;
             --text-main: #111827;
             --text-dim: #4b5563;
-            --font-display: 'Bebas Neue', cursive;
-            --font-body: 'Space Grotesk', sans-serif;
+            --font-display: 'Special Elite', cursive;
+            --font-body: 'Inter', sans-serif;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
             --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
             --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
@@ -168,11 +169,18 @@
         }
 
         .logo {
-            font-size: 2.2rem;
-            color: var(--accent-primary);
-            text-decoration: none;
+            font-size: 1.8rem;
             font-weight: 900;
-            letter-spacing: -1px;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
         }
 
         .nav-links {
@@ -271,7 +279,7 @@
 
         .hero-image-container {
             position: relative;
-            width: 520px;
+            width: 650px;
             max-width: 95%;
             margin-bottom: 50px;
             animation: float 8s ease-in-out infinite;
@@ -280,10 +288,10 @@
 
         .hero-image {
             width: 100%;
-            height: 100%;
+            height: auto;
             object-fit: contain;
-            filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.12));
-            border-radius: 30px;
+            filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.15));
+            border-radius: 40px;
             transition: transform 0.5s ease;
         }
 
@@ -302,23 +310,26 @@
         }
 
         .hero-content h1 {
-            font-size: clamp(3.5rem, 10vw, 7.5rem);
-            line-height: 0.85;
-            margin-bottom: 25px;
+            font-size: clamp(4rem, 12vw, 9rem);
+            line-height: 0.8;
+            margin-bottom: 20px;
             color: var(--text-main);
             font-weight: 900;
-            letter-spacing: -2px;
+            letter-spacing: -3px;
+            font-family: var(--font-display);
         }
 
         .hero-content p {
-            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-size: clamp(1.4rem, 4vw, 2.2rem);
             color: var(--text-dim);
-            margin-bottom: 50px;
-            font-weight: 500;
-            max-width: 750px;
+            margin-bottom: 60px;
+            font-weight: 900;
+            max-width: 850px;
             margin-left: auto;
             margin-right: auto;
-            line-height: 1.4;
+            line-height: 1.2;
+            text-transform: uppercase;
+            letter-spacing: -1px;
         }
 
         .hero-btns {
@@ -415,12 +426,13 @@
         }
 
         .mission-text {
-            font-size: clamp(1.3rem, 3.5vw, 2.2rem);
-            line-height: 1.6;
+            font-size: clamp(1.4rem, 4vw, 2.5rem);
+            line-height: 1.4;
             color: var(--text-main);
-            font-weight: 500;
+            font-weight: 900;
             position: relative;
-            letter-spacing: -0.5px;
+            letter-spacing: -1px;
+            text-transform: uppercase;
         }
 
         .mission-text::before {
@@ -490,12 +502,14 @@
 
         /* --- Story Section --- */
         .section-title {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            margin-bottom: 80px;
+            font-size: clamp(3rem, 8vw, 5.5rem);
             text-align: center;
+            margin-bottom: 80px;
             color: var(--text-main);
+            font-family: var(--font-display);
             position: relative;
             display: block;
+            letter-spacing: -2px;
         }
 
         .section-title::after {
@@ -504,10 +518,11 @@
             bottom: -15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
-            height: 6px;
+            width: 120px;
+            height: 8px;
             background: var(--accent-primary);
-            border-radius: 3px;
+            border-radius: 4px;
+            opacity: 0.8;
         }
 
         .story-grid {
@@ -562,20 +577,23 @@
         }
 
         .vote-btn {
-            padding: 12px 10px;
-            font-size: 0.8rem;
-            font-weight: 700;
+            padding: 15px 10px;
+            font-size: 0.75rem;
+            font-weight: 900;
             text-transform: uppercase;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            background: var(--bg-alt);
+            border: 2px solid rgba(0, 0, 0, 0.08);
+            background: #ffffff;
             color: var(--text-main);
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
-            border-radius: 12px;
+            justify-content: center;
+            gap: 8px;
+            border-radius: 14px;
+            line-height: 1.2;
+            text-align: center;
         }
 
         .vote-btn:hover {
@@ -691,9 +709,10 @@
 
         .stat-value {
             font-family: var(--font-display);
-            font-size: 3rem;
+            font-size: 4rem;
             color: var(--accent-primary);
             line-height: 1;
+            letter-spacing: -1px;
         }
 
         .ca-box {
@@ -798,7 +817,10 @@
 
     <nav>
         <div class="nav-container">
-            <a href="#" class="logo glitch" data-text="$LOST">$LOST</a>
+            <a href="#" class="logo">
+                <img src="https://lcaryepoaiuzuppladzq.supabase.co/storage/v1/object/public/lost/lost.png" alt="$LOST" class="logo-img">
+                <span>$LOST</span>
+            </a>
             <div class="nav-links" id="navLinks">
                 <a href="#hero">Home</a>
                 <a href="#mission">Mission</a>
@@ -958,11 +980,23 @@
         window.addEventListener("scroll", reveal);
         reveal(); // Initial check
         // These will be injected via Vite or you can hardcode them for static deployment
-        const SUPABASE_URL = "YOUR_SUPABASE_URL"; 
-        const SUPABASE_KEY = "YOUR_SUPABASE_ANON_KEY";
+        const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "https://lcaryepoaiuzuppladzq.supabase.co"; 
+        const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || "";
         
-        // Use a different name for the client to avoid shadowing the global 'supabase' object
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        let supabaseClient = null;
+        const isSupabaseConfigured = SUPABASE_URL && SUPABASE_KEY && SUPABASE_KEY !== "YOUR_SUPABASE_ANON_KEY" && SUPABASE_KEY !== "";
+        
+        if (isSupabaseConfigured) {
+            try {
+                supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            } catch (e) {
+                console.error("Supabase initialization failed:", e);
+            }
+        }
+
+        // Fallback Local Storage Logic
+        const getLocalStories = () => JSON.parse(localStorage.getItem('lost_stories') || '[]');
+        const saveLocalStories = (stories) => localStorage.setItem('lost_stories', JSON.stringify(stories));
 
         // --- Mobile Menu ---
         const hamburger = document.getElementById('hamburger');
@@ -987,20 +1021,32 @@
         const submitBtn = document.getElementById('submitStory');
 
         async function loadStories() {
-            const { data, error } = await supabaseClient
-                .from('stories')
-                .select('*')
-                .order('created_at', { ascending: false });
+            let stories = [];
+            if (supabaseClient) {
+                const { data, error } = await supabaseClient
+                    .from('stories')
+                    .select('*')
+                    .order('created_at', { ascending: false });
 
-            if (error) {
-                console.error('Error loading stories:', error);
-                return;
+                if (error) {
+                    console.error('Error loading stories from Supabase:', error);
+                    stories = getLocalStories();
+                } else {
+                    stories = data;
+                }
+            } else {
+                stories = getLocalStories();
             }
 
             storiesContainer.innerHTML = '';
-            data.forEach(story => {
+            if (stories.length === 0) {
+                storiesContainer.innerHTML = '<div style="text-align: center; grid-column: 1/-1; color: var(--text-dim);">No stories yet. Be the first to share yours!</div>';
+                return;
+            }
+
+            stories.forEach(story => {
                 const card = document.createElement('div');
-                card.className = 'story-card reveal active'; // Add reveal active for visibility
+                card.className = 'story-card reveal active';
                 card.innerHTML = `
                     <span class="story-user">@${story.username}</span>
                     <p class="story-text">"${story.content}"</p>
@@ -1022,14 +1068,24 @@
         async function vote(id, type) {
             const column = type === 'agree' ? 'agree_count' : 'stay_strong_count';
             
-            // In a real app, we'd use an RPC to increment, but for simplicity:
-            const { data: current } = await supabaseClient.from('stories').select(column).eq('id', id).single();
-            const { error } = await supabaseClient
-                .from('stories')
-                .update({ [column]: (current[column] || 0) + 1 })
-                .eq('id', id);
-
-            if (!error) loadStories();
+            if (supabaseClient) {
+                const { data: current } = await supabaseClient.from('stories').select(column).eq('id', id).single();
+                if (current) {
+                    const { error } = await supabaseClient
+                        .from('stories')
+                        .update({ [column]: (current[column] || 0) + 1 })
+                        .eq('id', id);
+                    if (!error) loadStories();
+                }
+            } else {
+                const stories = getLocalStories();
+                const story = stories.find(s => s.id === id);
+                if (story) {
+                    story[column] = (story[column] || 0) + 1;
+                    saveLocalStories(stories);
+                    loadStories();
+                }
+            }
         }
 
         submitBtn.addEventListener('click', async () => {
@@ -1044,14 +1100,37 @@
             submitBtn.disabled = true;
             submitBtn.innerText = 'SUBMITTING...';
 
-            const { error } = await supabaseClient
-                .from('stories')
-                .insert([{ username, content, agree_count: 0, stay_strong_count: 0 }]);
+            if (supabaseClient) {
+                const { error } = await supabaseClient
+                    .from('stories')
+                    .insert([{ username, content, agree_count: 0, stay_strong_count: 0 }]);
 
-            if (error) {
-                alert('Error submitting story. Try again.');
-                console.error(error);
+                if (error) {
+                    console.error('Supabase error, falling back to local storage:', error);
+                    saveToLocal(username, content);
+                } else {
+                    resetForm();
+                }
             } else {
+                saveToLocal(username, content);
+            }
+
+            function saveToLocal(username, content) {
+                const stories = getLocalStories();
+                const newStory = {
+                    id: Date.now(),
+                    username,
+                    content,
+                    agree_count: 0,
+                    stay_strong_count: 0,
+                    created_at: new Date().toISOString()
+                };
+                stories.unshift(newStory);
+                saveLocalStories(stories);
+                resetForm();
+            }
+
+            function resetForm() {
                 document.getElementById('username').value = '';
                 document.getElementById('storyContent').value = '';
                 loadStories();
