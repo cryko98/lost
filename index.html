@@ -322,7 +322,7 @@
         .hero-content p {
             font-size: clamp(1.4rem, 4vw, 2.2rem);
             color: var(--text-dim);
-            margin-bottom: 60px;
+            margin-bottom: 30px;
             font-weight: 900;
             max-width: 850px;
             margin-left: auto;
@@ -499,6 +499,33 @@
         .how-to-card p {
             color: var(--text-dim);
             font-size: 1.1rem;
+        }
+
+        .mission-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            text-align: center;
+        }
+
+        .mission-img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .mission-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-dim);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         /* --- Story Section --- */
@@ -738,16 +765,58 @@
             font-size: clamp(1.5rem, 4vw, 2.8rem);
         }
 
-        .ca-box {
-            background: var(--bg-alt);
-            padding: 30px;
-            border: 2px dashed var(--accent-primary);
-            display: flex;
-            justify-content: space-between;
+        .ca-compact {
+            background: rgba(0,0,0,0.05);
+            padding: 8px 15px;
+            border: 1px dashed var(--accent-primary);
+            display: inline-flex;
             align-items: center;
-            margin-bottom: 60px;
-            word-break: break-all;
-            border-radius: 16px;
+            border-radius: 8px;
+            margin-left: 15px;
+            font-size: 0.8rem;
+        }
+
+        .ca-compact .ca-text-mini {
+            font-family: var(--f-mono);
+            color: var(--text-dim);
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .btn-copy-mini {
+            background: var(--accent-primary);
+            color: #ffffff;
+            border: none;
+            padding: 4px 10px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 900;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .hero-ca-container {
+            margin-top: 10px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-ca-container .ca-compact {
+            margin-left: 0;
+            background: rgba(0,0,0,0.05);
+            border-color: var(--accent-primary);
+        }
+
+        .hero-ca-container .ca-text-mini {
+            color: var(--text-main);
+        }
+
+        @media (max-width: 768px) {
+            .nav-container .ca-compact {
+                display: none;
+            }
         }
 
         .ca-text {
@@ -903,6 +972,10 @@
             <a href="#" class="logo">
                 <img src="https://lcaryepoaiuzuppladzq.supabase.co/storage/v1/object/public/lost/lost.png" alt="$LOST" class="logo-img">
             </a>
+            <div class="ca-compact">
+                <span class="ca-text-mini">n3ShrNZR...pump</span>
+                <button class="btn-copy-mini" onclick="copyCA(this)">COPY</button>
+            </div>
             <div class="nav-links" id="navLinks">
                 <a href="#hero">Home</a>
                 <a href="#mission">Mission</a>
@@ -925,6 +998,12 @@
         <div class="hero-content">
             <h1 class="glitch" data-text="PUMP.FUN RUINED MY LIFE">PUMP.FUN RUINED MY LIFE</h1>
             <p>$LOST — But At Least We're Lost Together</p>
+            <div class="hero-ca-container">
+                <div class="ca-compact">
+                    <span class="ca-text-mini">n3ShrNZRCoMrw5Gww7rPMxVbDq3to3YwsGkDz19pump</span>
+                    <button class="btn-copy-mini" onclick="copyCA(this)">COPY CA</button>
+                </div>
+            </div>
             <div class="hero-btns">
                 <a href="https://jup.ag/tokens/n3ShrNZRCoMrw5Gww7rPMxVbDq3to3YwsGkDz19pump" target="_blank" class="btn btn-primary">BUY $LOST</a>
                 <a href="https://x.com/i/communities/2035772242831790146" target="_blank" class="btn btn-secondary">JOIN COMMUNITY</a>
@@ -944,9 +1023,14 @@
     <section id="mission">
         <h2 class="section-title">Our Mission</h2>
         <div class="mission-content">
-            <p class="mission-text">
-                $LOST was created for the people who traded on Pump.fun, got caught in scams, lost money, and were left feeling lost, frustrated, and full of regret. We're here to change that by building something honest, transparent, and fair — a project where everyone gets a real chance.
-            </p>
+            <div class="mission-text-container">
+                <p class="mission-text">
+                    $LOST was created for the people who traded on Pump.fun, got caught in scams, lost money, and were left feeling lost, frustrated, and full of regret. We're here to change that by building something honest, transparent, and fair — a project where everyone gets a real chance.
+                </p>
+            </div>
+            <div class="mission-img-container">
+                <img src="https://lcaryepoaiuzuppladzq.supabase.co/storage/v1/object/public/lost/photo_2026-03-27_07-24-53.jpg" alt="Our Mission" class="mission-img" referrerPolicy="no-referrer">
+            </div>
         </div>
     </section>
 
@@ -1017,9 +1101,9 @@
                 <span class="stat-value">0%</span>
             </div>
         </div>
-        <div class="ca-box">
+        <div class="ca-box" style="background: var(--bg-alt); padding: 30px; border: 2px dashed var(--accent-primary); display: flex; justify-content: space-between; align-items: center; margin-bottom: 60px; word-break: break-all; border-radius: 16px;">
             <span class="ca-text" id="contractAddress">n3ShrNZRCoMrw5Gww7rPMxVbDq3to3YwsGkDz19pump</span>
-            <button class="btn-copy" onclick="copyCA()">Copy CA</button>
+            <button class="btn-copy" onclick="copyCA(this)">Copy CA</button>
         </div>
     </section>
 
@@ -1113,12 +1197,17 @@
         });
 
         // --- Copy CA ---
-        window.copyCA = function() {
-            const ca = document.getElementById('contractAddress').innerText;
+        window.copyCA = function(btn) {
+            const ca = "n3ShrNZRCoMrw5Gww7rPMxVbDq3to3YwsGkDz19pump";
             navigator.clipboard.writeText(ca).then(() => {
-                const btn = document.querySelector('.btn-copy');
+                const originalText = btn.innerText;
                 btn.innerText = 'COPIED!';
-                setTimeout(() => btn.innerText = 'COPY CA', 2000);
+                const originalBg = btn.style.background;
+                btn.style.background = '#22c55e';
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = originalBg;
+                }, 2000);
             });
         };
 
