@@ -1242,35 +1242,35 @@
                 stories = getLocalStories();
             }
 
+            // Update Public View
             storiesContainer.innerHTML = '';
             if (stories.length === 0) {
                 storiesContainer.innerHTML = '<div style="text-align: center; grid-column: 1/-1; color: var(--text-dim);">No stories yet. Be the first to share yours!</div>';
-                return;
+            } else {
+                stories.forEach(story => {
+                    const hasVoted = votedStories[story.id];
+                    const card = document.createElement('div');
+                    card.className = 'story-card'; 
+                    card.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                            <span class="story-user">@${story.username}</span>
+                            <span style="font-size: 0.7rem; color: var(--text-dim); font-family: var(--f-mono);">ID: ${story.id}</span>
+                        </div>
+                        <p class="story-text">"${story.content}"</p>
+                        <div class="vote-container">
+                            <button class="vote-btn agree ${hasVoted ? 'voted' : ''}" onclick="window.vote(${story.id}, 'agree')" ${hasVoted ? 'disabled' : ''}>
+                                I AGREE, PUMPFUN RUINED YOUR LIFE
+                                <span class="vote-count">${story.agree_count || 0}</span>
+                            </button>
+                            <button class="vote-btn strong ${hasVoted ? 'voted' : ''}" onclick="window.vote(${story.id}, 'strong')" ${hasVoted ? 'disabled' : ''}>
+                                YOU'RE NOT LOST
+                                <span class="vote-count">${story.stay_strong_count || 0}</span>
+                            </button>
+                        </div>
+                    `;
+                    storiesContainer.appendChild(card);
+                });
             }
-
-            stories.forEach(story => {
-                const hasVoted = votedStories[story.id];
-                const card = document.createElement('div');
-                card.className = 'story-card'; 
-                card.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
-                        <span class="story-user">@${story.username}</span>
-                        <span style="font-size: 0.7rem; color: var(--text-dim); font-family: var(--f-mono);">ID: ${story.id}</span>
-                    </div>
-                    <p class="story-text">"${story.content}"</p>
-                    <div class="vote-container">
-                        <button class="vote-btn agree ${hasVoted ? 'voted' : ''}" onclick="window.vote(${story.id}, 'agree')" ${hasVoted ? 'disabled' : ''}>
-                            I AGREE, PUMPFUN RUINED YOUR LIFE
-                            <span class="vote-count">${story.agree_count || 0}</span>
-                        </button>
-                        <button class="vote-btn strong ${hasVoted ? 'voted' : ''}" onclick="window.vote(${story.id}, 'strong')" ${hasVoted ? 'disabled' : ''}>
-                            YOU'RE NOT LOST
-                            <span class="vote-count">${story.stay_strong_count || 0}</span>
-                        </button>
-                    </div>
-                `;
-                storiesContainer.appendChild(card);
-            });
         };
 
         window.vote = async function(id, type) {
