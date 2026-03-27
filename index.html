@@ -1253,7 +1253,10 @@
                 const card = document.createElement('div');
                 card.className = 'story-card'; 
                 card.innerHTML = `
-                    <span class="story-user">@${story.username}</span>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                        <span class="story-user">@${story.username}</span>
+                        <span style="font-size: 0.7rem; color: var(--text-dim); font-family: var(--f-mono);">ID: ${story.id}</span>
+                    </div>
                     <p class="story-text">"${story.content}"</p>
                     <div class="vote-container">
                         <button class="vote-btn agree ${hasVoted ? 'voted' : ''}" onclick="window.vote(${story.id}, 'agree')" ${hasVoted ? 'disabled' : ''}>
