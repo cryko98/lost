@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$LOST | Pump.fun Ruined My Life</title>
+    <meta name="description" content="$LOST — The Solana memecoin for the rekt. Pump.fun ruined our lives, so we built a community.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="$LOST | Pump.fun Ruined My Life">
+    <meta property="og:description" content="But at least we're lost together. Join the community of survivors.">
+    <meta property="og:image" content="https://picsum.photos/seed/lostcoin/1200/630">
+    <meta property="og:type" content="website">
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Google Fonts -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;700&display=swap');
+
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #151515;
+            --accent-primary: #4ade80; /* Pump.fun Mint Green */
+            --accent-secondary: #22c55e;
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+            --font-display: 'Bebas Neue', cursive;
+            --font-body: 'Space Grotesk', sans-serif;
+            --glitch-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-primary);
+            border-radius: 10px;
+        }
+
+        /* --- Typography --- */
+        h1, h2, h3 {
+            font-family: var(--font-display);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--accent-primary);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 var(--accent-secondary);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(31px, 9999px, 94px, 0); }
+            5% { clip: rect(70px, 9999px, 71px, 0); }
+            10% { clip: rect(29px, 9999px, 83px, 0); }
+            15% { clip: rect(16px, 9999px, 91px, 0); }
+            20% { clip: rect(2px, 9999px, 23px, 0); }
+            100% { clip: rect(67px, 9999px, 98px, 0); }
+        }
+
+        @keyframes glitch-anim2 {
+            0% { clip: rect(65px, 9999px, 100px, 0); }
+            100% { clip: rect(1px, 9999px, 30px, 0); }
+        }
+
+        /* --- Layout --- */
+        section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(74, 222, 128, 0.2);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: 900;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            transition: color 0.3s;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .btn-buy-nav {
+            padding: 10px 25px;
+            background: var(--accent-primary);
+            color: var(--bg-dark) !important;
+            text-decoration: none;
+            font-weight: 900;
+            border-radius: 50px;
+            box-shadow: 0 0 15px rgba(74, 222, 128, 0.4);
+            transition: all 0.3s;
+        }
+
+        .btn-buy-nav:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(74, 222, 128, 0.6);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: var(--text-main);
+            transition: 0.3s;
+        }
+
+        /* --- Hero Section --- */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 120px 20px 60px;
+        }
+
+        #bg-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.2;
+        }
+
+        .hero-image-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin-bottom: 40px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 30px rgba(74, 222, 128, 0.5));
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .hero-content {
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 0.9;
+            margin-bottom: 20px;
+            color: var(--accent-primary);
+            text-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
+        }
+
+        .hero-content p {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--text-main);
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        /* --- Marquee --- */
+        .marquee {
+            width: 100%;
+            background: var(--accent-primary);
+            color: var(--bg-dark);
+            padding: 15px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            transform: rotate(-2deg);
+            margin: 40px 0;
+            z-index: 10;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* --- Mission Section --- */
+        #mission {
+            background: linear-gradient(180deg, var(--bg-dark) 0%, #111 100%);
+            border-top: 1px solid rgba(74, 222, 128, 0.1);
+        }
+
+        .mission-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .mission-text {
+            font-size: 1.8rem;
+            line-height: 1.4;
+            color: var(--text-main);
+            font-weight: 300;
+            position: relative;
+        }
+
+        .mission-text::before {
+            content: '"';
+            position: absolute;
+            top: -40px;
+            left: -20px;
+            font-size: 8rem;
+            color: var(--accent-primary);
+            opacity: 0.2;
+            font-family: serif;
+        }
+
+        /* --- How To Buy --- */
+        .how-to-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .how-to-card {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(74, 222, 128, 0.1);
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .how-to-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(74, 222, 128, 0.1);
+        }
+
+        .step-num {
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--accent-primary);
+            color: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 2rem;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(74, 222, 128, 0.3);
+        }
+
+        .how-to-card h3 {
+            margin-top: 10px;
+            margin-bottom: 15px;
+            color: var(--accent-primary);
+        }
+
+        /* --- Story Section --- */
+        .section-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 60px;
+            text-align: center;
+            color: var(--accent-primary);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-primary);
+            transform: scaleX(0.3);
+            transition: 0.5s;
+        }
+
+        section:hover .section-title::after {
+            transform: scaleX(1);
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .story-card {
+            background: var(--bg-card);
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: 4px solid var(--accent-primary);
+            transition: 0.3s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .story-card:hover {
+            transform: scale(1.02);
+            background: #1a1a1a;
+        }
+
+        .story-user {
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 10px;
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        .story-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            flex-grow: 1;
+            font-size: 1rem;
+        }
+
+        .vote-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+        }
+
+        .vote-btn {
+            flex: 1;
+            padding: 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 1px solid rgba(74, 222, 128, 0.2);
+            background: transparent;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            border-radius: 5px;
+        }
+
+        .vote-btn:hover {
+            background: rgba(74, 222, 128, 0.1);
+            border-color: var(--accent-primary);
+        }
+
+        .vote-btn.agree:hover { color: var(--accent-primary); }
+        .vote-btn.strong:hover { color: var(--accent-secondary); }
+
+        .vote-count {
+            font-size: 1rem;
+            color: var(--accent-primary);
+        }
+
+        /* --- Submission Form --- */
+        .story-form {
+            max-width: 700px;
+            margin: 0 auto 80px;
+            background: var(--bg-card);
+            padding: 40px;
+            border: 1px solid rgba(74, 222, 128, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--accent-primary);
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 10px rgba(74, 222, 128, 0.2);
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--accent-primary);
+            color: var(--bg-dark);
+            padding: 18px;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 900;
+        }
+
+        .btn-submit:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(74, 222, 128, 0.4);
+        }
+
+        /* --- Tokenomics --- */
+        .token-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--accent-primary);
+            background: #1a1a1a;
+        }
+
+        .stat-label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            color: var(--accent-primary);
+            line-height: 1;
+        }
+
+        .ca-box {
+            background: #111;
+            padding: 25px;
+            border: 1px dashed var(--accent-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            word-break: break-all;
+            border-radius: 10px;
+        }
+
+        .ca-text {
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--accent-primary);
+            font-weight: 700;
+            font-size: clamp(0.8rem, 2vw, 1.2rem);
+        }
+
+        .btn-copy {
+            background: var(--accent-primary);
+            color: var(--bg-dark);
+            border: none;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            font-weight: 900;
+            border-radius: 5px;
+            margin-left: 15px;
+            flex-shrink: 0;
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 80px 20px;
+            background: #050505;
+            text-align: center;
+            border-top: 1px solid rgba(74, 222, 128, 0.1);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        /* --- Mobile --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--bg-dark);
+                flex-direction: column;
+                padding: 40px;
+                transition: 0.3s;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo glitch" data-text="$LOST">$LOST</a>
+            <div class="nav-links" id="navLinks">
+                <a href="#hero">Home</a>
+                <a href="#mission">Mission</a>
+                <a href="#how-to-buy">How To Buy</a>
+                <a href="#story">Stories</a>
+                <a href="#token">Tokenomics</a>
+                <a href="https://jup.ag/tokens/n3ShrNZRCoMrw5Gww7rPMxVbDq3to3YwsGkDz19pump" target="_blank" class="btn-buy-nav">BUY $LOST</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section id="hero">
+        <canvas id="bg-canvas"></canvas>
+        <div class="hero-image-container reveal">
+            <img src="https://lcaryepoaiuzuppladzq.supabase.co/storage/v1/object/public/lost/photo_2026-03-27_07-24-53.jpg" alt="$LOST Logo" class="hero-image" referrerPolicy="no-referrer">
+        </div>
+        <div class="hero-content reveal">
+            <h1 class="glitch" data-text="PUMP.FUN RUINED MY LIFE">PUMP.FUN RUINED MY LIFE</h1>
+            <p>$LOST — But At Least We're Lost Together</p>
+            <div class="hero-btns">
+                <a href="https://jup.ag/tokens/n3ShrNZRCoMrw5Gww7rPMxVbDq3to3YwsGkDz19pump" target="_blank" class="btn btn-primary">BUY $LOST</a>
+                <a href="https://x.com/i/communities/2035772242831790146" target="_blank" class="btn btn-secondary">JOIN COMMUNITY</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="marquee">
+        <div class="marquee-content">
+            $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST $LOST
+        </div>
+    </div>
+
+    <section id="mission" class="reveal">
+        <h2 class="section-title">Our Mission</h2>
+        <div class="mission-content">
+            <p class="mission-text">
+                $LOST was created for the people who traded on Pump.fun, got caught in scams, lost money, and were left feeling lost, frustrated, and full of regret. We're here to change that by building something honest, transparent, and fair — a project where everyone gets a real chance.
+            </p>
+        </div>
+    </section>
+
+    <section id="how-to-buy" class="reveal">
+        <h2 class="section-title">How To Buy On Pump.fun</h2>
+        <div class="how-to-grid">
+            <div class="how-to-card">
+                <div class="step-num">01</div>
+                <h3>Get Solana</h3>
+                <p>Buy SOL on an exchange (Binance, Coinbase, etc.) and send it to your Phantom or Solflare wallet.</p>
+            </div>
+            <div class="how-to-card">
+                <div class="step-num">02</div>
+                <h3>Visit Pump.fun</h3>
+                <p>Go to pump.fun and connect your wallet. Search for the $LOST contract address.</p>
+            </div>
+            <div class="how-to-card">
+                <div class="step-num">03</div>
+                <h3>Swap SOL for $LOST</h3>
+                <p>Enter the amount of SOL you want to spend and hit 'Buy'. Confirm the transaction in your wallet.</p>
+            </div>
+            <div class="how-to-card">
+                <div class="step-num">04</div>
+                <h3>HODL Together</h3>
+                <p>Welcome to the community of survivors. We're all lost, but we're moving forward together.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="story" class="reveal">
+        <h2 class="section-title">Tell Your Story</h2>
+        
+        <div class="story-form">
+            <div class="form-group">
+                <label for="username">Username (Anon is fine)</label>
+                <input type="text" id="username" placeholder="e.g. rekt_trader_69">
+            </div>
+            <div class="form-group">
+                <label for="storyContent">How did Pump.fun ruin your life?</label>
+                <textarea id="storyContent" placeholder="Describe your tragic rug or pump-and-dump experience..."></textarea>
+            </div>
+            <button class="btn-submit" id="submitStory">SUBMIT STORY</button>
+        </div>
+
+        <div class="story-grid" id="storiesContainer">
+            <!-- Stories will be loaded here -->
+            <div style="text-align: center; grid-column: 1/-1;">Loading stories...</div>
+        </div>
+    </section>
+
+    <section id="token" class="reveal">
+        <h2 class="section-title">$LOST Tokenomics</h2>
+        <div class="token-grid">
+            <div class="stat-card">
+                <span class="stat-label">Total Supply</span>
+                <span class="stat-value">1,000,000,000</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Liquidity</span>
+                <span class="stat-value">LOCKED</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Decimals</span>
+                <span class="stat-value">6</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Tax</span>
+                <span class="stat-value">0%</span>
+            </div>
+        </div>
+        <div class="ca-box">
+            <span class="ca-text" id="contractAddress">n3ShrNZRCoMrw5Gww7rPMxVbDq3to3YwsGkDz19pump</span>
+            <button class="btn-copy" onclick="copyCA()">Copy CA</button>
+        </div>
+    </section>
+
+    <footer>
+        <h3 style="color: var(--accent-primary);">$LOST | Not Financial Advice</h3>
+        <div class="footer-links">
+            <a href="https://dexscreener.com/solana/68A4u3hmm23XSqogWSBK7kgyv2c2cVZjZvKD3aptCk7k" target="_blank">Chart</a>
+            <a href="https://jup.ag/tokens/n3ShrNZRCoMrw5Gww7rPMxVbDq3to3YwsGkDz19pump" target="_blank">Buy</a>
+            <a href="https://x.com/i/communities/2035772242831790146" target="_blank">Community</a>
+        </div>
+        <p style="font-size: 0.8rem; color: #666;">&copy; 2024 $LOST Token. All rights reserved.</p>
+        <p style="font-size: 0.7rem; color: #999; max-width: 600px; margin: 20px auto 0;">Disclaimer: $LOST is a memecoin with no intrinsic value. Trading crypto is risky. Don't invest money you can't afford to lose.</p>
+    </footer>
+
+    <script>
+        // --- Reveal Animation ---
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // Initial check
+        // These will be injected via Vite or you can hardcode them for static deployment
+        const SUPABASE_URL = "YOUR_SUPABASE_URL"; 
+        const SUPABASE_KEY = "YOUR_SUPABASE_ANON_KEY";
+        
+        // Use a different name for the client to avoid shadowing the global 'supabase' object
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // --- Mobile Menu ---
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // --- Copy CA ---
+        function copyCA() {
+            const ca = document.getElementById('contractAddress').innerText;
+            navigator.clipboard.writeText(ca).then(() => {
+                const btn = document.querySelector('.btn-copy');
+                btn.innerText = 'COPIED!';
+                setTimeout(() => btn.innerText = 'COPY CA', 2000);
+            });
+        }
+
+        // --- Supabase Logic ---
+        const storiesContainer = document.getElementById('storiesContainer');
+        const submitBtn = document.getElementById('submitStory');
+
+        async function loadStories() {
+            const { data, error } = await supabaseClient
+                .from('stories')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error('Error loading stories:', error);
+                return;
+            }
+
+            storiesContainer.innerHTML = '';
+            data.forEach(story => {
+                const card = document.createElement('div');
+                card.className = 'story-card reveal active'; // Add reveal active for visibility
+                card.innerHTML = `
+                    <span class="story-user">@${story.username}</span>
+                    <p class="story-text">"${story.content}"</p>
+                    <div class="vote-container">
+                        <button class="vote-btn agree" onclick="vote(${story.id}, 'agree')">
+                            I AGREE, PUMPFUN RUINED YOUR LIFE
+                            <span class="vote-count">${story.agree_count || 0}</span>
+                        </button>
+                        <button class="vote-btn strong" onclick="vote(${story.id}, 'strong')">
+                            YOU'RE NOT LOST
+                            <span class="vote-count">${story.stay_strong_count || 0}</span>
+                        </button>
+                    </div>
+                `;
+                storiesContainer.appendChild(card);
+            });
+        }
+
+        async function vote(id, type) {
+            const column = type === 'agree' ? 'agree_count' : 'stay_strong_count';
+            
+            // In a real app, we'd use an RPC to increment, but for simplicity:
+            const { data: current } = await supabaseClient.from('stories').select(column).eq('id', id).single();
+            const { error } = await supabaseClient
+                .from('stories')
+                .update({ [column]: (current[column] || 0) + 1 })
+                .eq('id', id);
+
+            if (!error) loadStories();
+        }
+
+        submitBtn.addEventListener('click', async () => {
+            const username = document.getElementById('username').value || 'Anon';
+            const content = document.getElementById('storyContent').value;
+
+            if (!content) {
+                alert('Please tell your story!');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'SUBMITTING...';
+
+            const { error } = await supabaseClient
+                .from('stories')
+                .insert([{ username, content, agree_count: 0, stay_strong_count: 0 }]);
+
+            if (error) {
+                alert('Error submitting story. Try again.');
+                console.error(error);
+            } else {
+                document.getElementById('username').value = '';
+                document.getElementById('storyContent').value = '';
+                loadStories();
+            }
+
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'SUBMIT STORY';
+        });
+
+        loadStories();
+
+        // --- Matrix Background ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const characters = '01$LOSTREKT';
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+
+        for (let i = 0; i < columns; i++) drops[i] = 1;
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(10, 10, 10, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#4ade80'; 
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters.charAt(Math.floor(Math.random() * characters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 50);
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
+
